@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title> Hi :) </title>
+      <meta charset="UTF-8">
+      <script src="jquery.js"></script>
+   </head>
+   
+   <body>
+	<div align="center">
+		<h1> Tumblr link goes here </h1>
+			<input name="item" value="https://staff.tumblr.com/page/4">
+			<button type="button" id="scrape"> scrape the images </button>
+			<br>
+			<p id="results">
+	</div>
+		<div id="gallery" align="center">
+			<button type="button" id="download"> Start Download </button>
+		</div>
+      <script>
+	      $("#scrape").click(()=>{
+	      	let link = $("input[name|='item']").val()
+		let url = "http://localhost:3000/scraper?link="+link
+ 
+		$.getJSON((url),(res,status)=>{
+			res.forEach((links)=>{
+					//$("#gallery").append('<p>'+links+'</p>')	
+					$("#gallery").append('<img src="'+links+'">')
+				})
+			})
+	      	});
+		$("#download").click(()=>{
+			let url = "http://localhost:3000/download"
+			let data = {"downloading":"True","link":$("input").val()}
+			$.getJSON(url,data,(res)=>{
+				$("#gallery").append("<p>"+res.text+"</p>")
+				$("#gallery").append("<p>"+res.link+"</p>")
+				})
+		});
+      </script>
+   </body>
+</html>
+
+
